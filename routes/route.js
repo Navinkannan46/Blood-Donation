@@ -1,0 +1,27 @@
+const express = require('express')
+const { registerController, loginController, getAllUsers, deleteUser } = require('../controller/userController')
+const { donorRegister, allUserDonor, donorProfile, donorRegisterStatus, approveDonor, deleteDonor, getAdminDonor, updateAdminDonor, updateDonorProfile } = require('../controller/donorController')
+const jwtMiddleware = require('../middleware/jwtMiddlewatr')
+const { seekerRegister, getAllSeeker, seekerDelete } = require('../controller/seekerController')
+
+const route = express.Router()
+
+route.post('/register', registerController)
+route.post('/login', loginController)
+route.post('/admin/login', loginController)
+route.post('/donor/register', jwtMiddleware, donorRegister)
+route.get('/allDonor', jwtMiddleware, allUserDonor)
+route.get('/donor/profile', jwtMiddleware, donorProfile)
+route.put('/donor/profile/update', jwtMiddleware, updateDonorProfile)
+route.get('/allUser', jwtMiddleware, getAllUsers)
+route.get('/request/:id/update', jwtMiddleware, donorRegisterStatus)
+route.post('/seeker/register', jwtMiddleware, seekerRegister)
+route.get('/admin/allDonor', jwtMiddleware, approveDonor)
+route.delete('/delete/:id/donor', jwtMiddleware, deleteDonor)
+route.delete('/delete/:id/user', jwtMiddleware, deleteUser)
+route.get('/allSeeker', jwtMiddleware, getAllSeeker)
+route.delete('/delete/:id/seeker', jwtMiddleware, seekerDelete)
+route.get('/get/:id/donor', jwtMiddleware,getAdminDonor)
+route.put('/admin-update/:id/donor', jwtMiddleware,updateAdminDonor)
+
+module.exports = route
